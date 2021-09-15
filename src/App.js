@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
-const API = new ImageApiService();
+// const API = new ImageApiService();
 
 class App extends Component {
   state = {
@@ -17,16 +17,22 @@ class App extends Component {
     searchQuery: '',
     images: [],
     urlModal: '',
+    loading: false,
   };
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps !== this.props.searchQuery) {
-      this.onGetImages(this.state.searchQuery);
-      // this.setState({ loading: true });
+    const prevImage = prevState.searchQuery;
+    const newImage = this.state.searchQuery;
+    if (prevImage !== newImage) {
+      // console.log('pre', prevState.searchQuery);
+      // console.log('this', this.state.searchQuery);
+      // рендерим по условию лодинг
+      this.setState({ loading: true, images: [] });
+      this.onGetImages(newImage);
     }
   }
-  onGetImages() {
-    API.fetchImages(this.state.searchQuery).then(({ hits }) => {
-      this.setState({ images: [this.state.images, ...hits] });
+  onGetImages(newImage) {
+    ImageApiService(newImage).then(({ hits }) => {
+      this.setState({ images: [...hits] });
     });
   }
   handleQuerySubmit = searchQuery => {
