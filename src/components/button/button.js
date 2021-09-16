@@ -1,11 +1,15 @@
 import React from 'react';
 import s from './button.module.css';
 
-const button = () => {
-  window.scrollTo({
-    top: document.documentElement.scrollHeight,
-    behavior: 'smooth',
-  });
+const Button = ({ nextPage }) => {
+  return (
+    <div className={s.load__wrapper}>
+      <button className={s.Button} type="button" onClick={nextPage}>
+        {' '}
+        Load More
+      </button>
+    </div>
+  );
 };
 
-export default button;
+export default Button;

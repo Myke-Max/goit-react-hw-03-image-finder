@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
+import { HiX } from 'react-icons/hi';
 import s from './modal.module.css';
 
 const modalRoot = document.querySelector('#modal-root');
@@ -27,7 +28,12 @@ class Modal extends Component {
   render() {
     return createPortal(
       <div className={s.Overlay} onClick={this.handleBackdropClick}>
-        <div className={s.Modal}>{this.props.children}</div>
+        <div className={s.Modal}>
+          <button type="button" onClick={this.props.toggleClose} className={s.buttonClose}>
+            <HiX width="15" height="15" />
+          </button>
+          {this.props.children}
+        </div>
       </div>,
       modalRoot,
     );
